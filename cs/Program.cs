@@ -2,11 +2,17 @@
 
 long start = Stopwatch.GetTimestamp();
 
+//int d2p1 = Day2.Aggregate(Day2.P1_EXAMPLE);
+//Console.WriteLine($"Answer {d2p1}; Target {Day2.P1_ANSWER}");
+
+int d2p2 = Day2.Max(File.ReadAllText("Day2.data"));
+Console.WriteLine($"Answer {d2p2}");
+
 //int d1p1 = Day1.Calibrate(Day1.P1_EXAMPLE);
 //Debug.Assert(d1p1 == Day1.P1_ANSWER);
 
-int d1p1 = Day1.Calibrate(File.ReadAllText("Day1.data"));
-Debug.WriteLine(d1p1);
+//int d1p1 = Day1.Calibrate(File.ReadAllText("Day1.data"));
+//Debug.WriteLine(d1p1);
 
 //int d1p2 = Day1.ReCalibrate(Day1.P2_EXAMPLE);
 //Debug.Assert(d1p2 == Day1.P2_ANSWER);
@@ -15,4 +21,4 @@ Debug.WriteLine(d1p1);
 //int d1p2 = Day1.ReCalibrate(File.ReadAllText("Day1.data"));
 //Debug.WriteLine(d1p2);
 
-Debug.WriteLine($"Run time {Stopwatch.GetElapsedTime(start)}");
+Console.WriteLine($"Run time {Stopwatch.GetElapsedTime(start)}");
