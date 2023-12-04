@@ -2,8 +2,13 @@
 
 long start = Stopwatch.GetTimestamp();
 
-int d3p1 = Day3.P2(File.ReadAllText("Day3.data"));
-Console.WriteLine($"Answer {d3p1}");
+//int d4p1 = Day4.P2(Day4.P1_EXAMPLE);
+int d4p1 = Day4.P2(File.ReadAllText("Day4.data"));
+Console.WriteLine($"Answer {d4p1}");
+
+//int d3p1 = Day3.P2(File.ReadAllText("Day3.data"));
+//Console.WriteLine($"Answer {d3p1}");
+
 //int d2p1 = Day2.Aggregate(Day2.P1_EXAMPLE);
 //Console.WriteLine($"Answer {d2p1}; Target {Day2.P1_ANSWER}");
 
@@ -24,3 +29,4 @@ Console.WriteLine($"Answer {d3p1}");
 //Debug.WriteLine(d1p2);
 
 Console.WriteLine($"Run time {Stopwatch.GetElapsedTime(start)}");
+Console.ReadKey();
