@@ -7,13 +7,13 @@ Console.CancelKeyPress += (_, e) =>
     cts.Cancel();
 };
 
-await using var ms = File.OpenRead("Data/Day7.data");
 long start = Stopwatch.GetTimestamp();
 
-var Answer = await Day7.P2(ms, cts.Token);
+//var Answer = await Day7.P2(ms, cts.Token);
 
 //var Answer = await Day6.P2(ms, cts.Token);
 
+var Answer = await new Day5().PartTwo(cts.Token);
 //using var ms = new MemoryStream(Encoding.UTF8.GetBytes(Day5.P1_EXAMPLE));
 //using var ms = File.OpenRead("Day5.data");
 //long d5p1 = await Day5.P1(ms, cts.Token);
