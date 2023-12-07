@@ -1,10 +1,27 @@
 ﻿using cs;
 
+CancellationTokenSource cts = new();
+Console.CancelKeyPress += (_, e) =>
+{
+    e.Cancel = true;
+    cts.Cancel();
+};
+
+await using var ms = File.OpenRead("Day6.data");
 long start = Stopwatch.GetTimestamp();
 
+
+var Answer = await Day6.P2(ms, cts.Token);
+
+//using var ms = new MemoryStream(Encoding.UTF8.GetBytes(Day5.P1_EXAMPLE));
+//using var ms = File.OpenRead("Day5.data");
+//long d5p1 = await Day5.P1(ms, cts.Token);
+//long d5p2 = await Day5.P2(ms, cts.Token);
+//Console.WriteLine($"Answer {d5p2}");
+
 //int d4p1 = Day4.P2(Day4.P1_EXAMPLE);
-int d4p1 = Day4.P2(File.ReadAllText("Day4.data"));
-Console.WriteLine($"Answer {d4p1}");
+//int d4p1 = Day4.P2(File.ReadAllText("Day4.data"));
+//Console.WriteLine($"Answer {d4p1}");
 
 //int d3p1 = Day3.P2(File.ReadAllText("Day3.data"));
 //Console.WriteLine($"Answer {d3p1}");
@@ -28,5 +45,6 @@ Console.WriteLine($"Answer {d4p1}");
 //int d1p2 = Day1.ReCalibrate(File.ReadAllText("Day1.data"));
 //Debug.WriteLine(d1p2);
 
+Console.WriteLine($"Answer {Answer}");
 Console.WriteLine($"Run time {Stopwatch.GetElapsedTime(start)}");
 Console.ReadKey();
