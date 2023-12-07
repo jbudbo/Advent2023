@@ -1,6 +1,5 @@
 ﻿namespace cs;
 
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Round = (long Time, long RecordDistance);
 
