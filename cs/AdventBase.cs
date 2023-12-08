@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 
 [DebuggerStepThrough]
-internal abstract class AdventBase<I,A> where I : struct
+internal abstract class AdventBase<I,A> 
 {
-    public delegate ValueTask<A> DayCallback(IAsyncEnumerable<DataLine<I>> source
+    public delegate ValueTask DayCallback(IAsyncEnumerable<DataLine<I>> source
         , CancellationToken cancellationToken = default);
 
     private const string DATA_BASE_PATH = "Data";
@@ -12,29 +12,37 @@ internal abstract class AdventBase<I,A> where I : struct
 
     protected virtual int HeaderLines => 0;
 
-    protected abstract ValueTask<A> PartOne(IAsyncEnumerable<DataLine<I>> source
+    protected A Answer = default;
+
+    protected abstract ValueTask PartOne(IAsyncEnumerable<DataLine<I>> source
         , CancellationToken cancellationToken = default);
-    protected abstract ValueTask<A> PartTwo(IAsyncEnumerable<DataLine<I>> source
+    protected abstract ValueTask PartTwo(IAsyncEnumerable<DataLine<I>> source
         , CancellationToken cancellationToken = default);
 
-    protected virtual DeterminateOf<I> ParseData(DataLine<string?> row, bool PartTwo) => default;
+    protected abstract DeterminateOf<I> ParseData(DataLine<string?> row, bool PartTwo);
 
     protected virtual void ParseHeader(DataLine<string?> header, bool PartTwo) { }
 
-    public ValueTask<A> PartOne(CancellationToken cancellationToken = default)
-        => ReadForDay(PartOne, false, cancellationToken);
+    public async ValueTask<A> PartOne(CancellationToken cancellationToken = default)
+    { 
+        await ReadForDay(PartOne, false, cancellationToken);
+        return Answer;
+    }
 
-    public ValueTask<A> PartTwo(CancellationToken cancellationToken = default)
-        => ReadForDay(PartTwo, true, cancellationToken);
+    public async ValueTask<A> PartTwo(CancellationToken cancellationToken = default)
+    { 
+        await ReadForDay(PartTwo, true, cancellationToken);
+        return Answer;
+    }
 
-    private async ValueTask<A> ReadForDay(DayCallback day, bool PartTwo, CancellationToken cancellationToken = default)
+    private async ValueTask ReadForDay(DayCallback day, bool PartTwo, CancellationToken cancellationToken = default)
     {
         using Stream fileStream = File.OpenRead($"{DATA_BASE_PATH}/{Path.ChangeExtension(Day,"data")}");
         using StreamReader reader = new(fileStream);
 
         IAsyncEnumerable<DataLine<I>> input = ReadInput(reader, PartTwo, cancellationToken);
 
-        return await day(input, cancellationToken);
+        await day(input, cancellationToken);
     }
 
     private async IAsyncEnumerable<DataLine<I>> ReadInput(StreamReader rdr

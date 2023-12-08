@@ -1,93 +1,91 @@
-﻿using System.Runtime.CompilerServices;
+﻿namespace cs;
 
-namespace cs;
+//internal sealed class Day5 : AdventBase<RangedMap, long>
+//{
+//    protected override string Day => nameof(Day5);
 
-internal sealed class Day5 : AdventBase<RangedMap, long>
-{
-    protected override string Day => nameof(Day5);
+//    protected override int HeaderLines => 1;
 
-    protected override int HeaderLines => 1;
+//    private LongRange[] seeds = [];
+//    private readonly Dictionary<string, List<RangedMap>> maps = [];
+//    private string currentMap = string.Empty;
 
-    private LongRange[] seeds = [];
-    private readonly Dictionary<string, List<RangedMap>> maps = [];
-    private string currentMap = string.Empty;
+//    protected override async ValueTask<long> PartOne(IAsyncEnumerable<DataLine<RangedMap>> source, CancellationToken cancellationToken = default)
+//    {
+//        await foreach(var row in source)
+//        {
+//            var (_, (valid, data)) = row;
+//            if (!valid) continue;
 
-    protected override async ValueTask<long> PartOne(IAsyncEnumerable<DataLine<RangedMap>> source, CancellationToken cancellationToken = default)
-    {
-        await foreach(var row in source)
-        {
-            var (_, (valid, data)) = row;
-            if (!valid) continue;
+//            maps[currentMap].Add(data);
+//        }
 
-            maps[currentMap].Add(data);
-        }
+//        return default;
+//    }
 
-        return default;
-    }
+//    protected override async ValueTask<long> PartTwo(IAsyncEnumerable<DataLine<RangedMap>> source, CancellationToken cancellationToken = default)
+//    {
+//        await foreach (var row in source)
+//        {
+//            var (_, (valid, data)) = row;
+//            if (!valid) continue;
 
-    protected override async ValueTask<long> PartTwo(IAsyncEnumerable<DataLine<RangedMap>> source, CancellationToken cancellationToken = default)
-    {
-        await foreach (var row in source)
-        {
-            var (_, (valid, data)) = row;
-            if (!valid) continue;
-
-            maps[currentMap].Add(data);
-        }
+//            maps[currentMap].Add(data);
+//        }
 
 
 
-        return default;
-    }
+//        return default;
+//    }
 
-    protected override void ParseHeader(DataLine<string?> header, bool PartTwo)
-    {
-        var (_, (valid, data)) = header;
+//    protected override void ParseHeader(DataLine<string?> header, bool PartTwo)
+//    {
+//        var (_, (valid, data)) = header;
 
-        if (!valid) return;
+//        if (!valid) return;
 
-        string seedSet = SplitString(data!,2)[1];
+//        string seedSet = SplitString(data!,2)[1];
 
-        if (!PartTwo)
-        {
-            seeds = SplitString(seedSet)
-                .Select(long.Parse)
-                .Select(static l => new LongRange(l,1))
-                .ToArray();
-        }
-        else
-        {
-            seeds = SplitString(seedSet)
-                .Select(long.Parse)
-                .Chunk(2)
-                .Select(static l => new LongRange(l[0], l[1]))
-                .ToArray();
-        }
-    }
+//        if (!PartTwo)
+//        {
+//            seeds = SplitString(seedSet)
+//                .Select(long.Parse)
+//                .Select(static l => new LongRange(l,1))
+//                .ToArray();
+//        }
+//        else
+//        {
+//            seeds = SplitString(seedSet)
+//                .Select(long.Parse)
+//                .Chunk(2)
+//                .Select(static l => new LongRange(l[0], l[1]))
+//                .ToArray();
+//        }
+//    }
 
-    protected override DeterminateOf<RangedMap> ParseData(DataLine<string?> row, bool PartTwo)
-    {
-        var (_, (valid, data)) = row;
+//    protected override DeterminateOf<RangedMap> ParseData(DataLine<string?> row, bool PartTwo)
+//    {
+//        var (_, (valid, data)) = row;
 
-        if (!valid)
-            return DeterminateOf<RangedMap>.Bad();
+//        if (!valid)
+//            return DeterminateOf<RangedMap>.Bad();
 
-        // If this is a map definition, prep our dictionary
-        if (data!.Contains("map"))
-        {
-            string mapHeader = SplitString(data!, 2)[0];
-            maps[mapHeader] = [];
-            currentMap = mapHeader;
+//        // If this is a map definition, prep our dictionary
+//        if (data!.Contains("map"))
+//        {
+//            string mapHeader = SplitString(data!, 2)[0];
+//            maps[mapHeader] = [];
+//            currentMap = mapHeader;
 
-            return DeterminateOf<RangedMap>.Bad();
-        }
+//            return DeterminateOf<RangedMap>.Bad();
+//        }
 
-        long[] bits = SplitString(data!, 3).Select(long.Parse).ToArray();
+//        long[] bits = SplitString(data!, 3).Select(long.Parse).ToArray();
 
-        RangedMap map = new(bits);
-        return DeterminateOf<RangedMap>.Good(map);
-    }
-}
+//        RangedMap map = new(bits);
+//        return DeterminateOf<RangedMap>.Good(map);
+//    }
+//}
 
 //internal static partial class Day5Bad
 //{
