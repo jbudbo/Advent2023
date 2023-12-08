@@ -1,6 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 
 [DebuggerStepThrough]
+internal abstract class AdventBase<I> : AdventBase<I, long> { }
+
+[DebuggerStepThrough]
 internal abstract class AdventBase<I,A> 
 {
     public delegate ValueTask DayCallback(IAsyncEnumerable<DataLine<I>> source

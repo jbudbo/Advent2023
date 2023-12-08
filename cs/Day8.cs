@@ -1,9 +1,7 @@
-﻿
-using System.Formats.Asn1;
-using DirectionalCoordinate = (string L, string R);
+﻿using DirectionalCoordinate = (string L, string R);
 namespace cs;
 
-internal sealed class Day8 : AdventBase<KeyValuePair<string, DirectionalCoordinate>, long>
+internal sealed class Day8 : AdventBase<KeyValuePair<string, DirectionalCoordinate>>
 {
     protected override string Day => nameof(Day8);
 
