@@ -18,3 +18,11 @@
     public static DeterminateOf<I> Bad(I value = default)
         => new(false, value);
 }
+internal static class Union
+{
+    public static DeterminateOf<T> Pass<T>(T t)
+        => DeterminateOf<T>.Good(t);
+
+    public static DeterminateOf<T> Fail<T>()
+        => DeterminateOf<T>.Bad();
+}
