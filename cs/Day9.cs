@@ -4,7 +4,7 @@ internal sealed class Day9 : AdventBase<AdventSequence>
 {
     protected override string Day => nameof(Day9);
 
-    protected override DeterminateOf<AdventSequence> ParseData(DataLine<string?> row, bool PartTwo)
+    protected override Uof<AdventSequence> ParseData(DataLine<string?> row, bool PartTwo)
     {
         var (_, (v, d)) = row;
 
@@ -50,7 +50,7 @@ internal sealed class Day9 : AdventBase<AdventSequence>
 [DebuggerDisplay("{DebugView}")]
 internal readonly struct AdventSequence(long[] data)
 {
-    public readonly DeterminateOf<AdventSequence> Delta => IsTail
+    public readonly Uof<AdventSequence> Delta => IsTail
         ? Union.Fail<AdventSequence>()
         : Union.Pass<AdventSequence>(new(data
             .Window()

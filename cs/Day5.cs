@@ -9,12 +9,12 @@ internal sealed class Day5 : AdventBase<RangedMap>
     private readonly Dictionary<string, List<RangedMap>> maps = [];
     private string currentMap = string.Empty;
 
-    protected override DeterminateOf<RangedMap> ParseData(DataLine<string?> row, bool PartTwo)
+    protected override Uof<RangedMap> ParseData(DataLine<string?> row, bool PartTwo)
     {
         var (_, (valid, data)) = row;
 
         if (!valid)
-            return DeterminateOf<RangedMap>.Bad();
+            return Uof<RangedMap>.Bad();
 
         // If this is a map definition, prep our dictionary
         if (data!.Contains("map"))
@@ -23,13 +23,13 @@ internal sealed class Day5 : AdventBase<RangedMap>
             maps[mapHeader] = [];
             currentMap = mapHeader;
 
-            return DeterminateOf<RangedMap>.Bad();
+            return Uof<RangedMap>.Bad();
         }
 
         long[] bits = SplitString(data!, 3).Select(long.Parse).ToArray();
 
         RangedMap map = new(bits);
-        return DeterminateOf<RangedMap>.Good(map);
+        return Uof<RangedMap>.Good(map);
     }
 
     protected override ValueTask PartOne(IAsyncEnumerable<DataLine<RangedMap>> source, CancellationToken cancellationToken = default)

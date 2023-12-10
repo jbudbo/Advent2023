@@ -1,10 +1,10 @@
-﻿internal readonly struct DataLine<I>(int lineNumber, DeterminateOf<I> data)
+﻿internal readonly struct DataLine<I>(int lineNumber, Uof<I> data)
 {
     public readonly int LineNumber => lineNumber;
 
-    public readonly DeterminateOf<I> Data => data;
+    public readonly Uof<I> Data => data;
 
-    public void Deconstruct(out int LineNumber, out DeterminateOf<I> Data)
+    public void Deconstruct(out int LineNumber, out Uof<I> Data)
         => (LineNumber, Data)
         = (this.LineNumber, this.Data);
 }

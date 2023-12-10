@@ -9,7 +9,9 @@ Console.CancelKeyPress += (_, e) =>
 
 long start = Stopwatch.GetTimestamp();
 
-var Answer = await new Day9().PartTwo(cts.Token);
+var Answer = await new Day10().PartOne(cts.Token);
+
+//var Answer = await new Day9().PartTwo(cts.Token);
 
 //var Answer = await new Day8().PartTwo(cts.Token);
 

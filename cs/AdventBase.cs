@@ -22,7 +22,7 @@ internal abstract class AdventBase<I,A>
     protected abstract ValueTask PartTwo(IAsyncEnumerable<DataLine<I>> source
         , CancellationToken cancellationToken = default);
 
-    protected abstract DeterminateOf<I> ParseData(DataLine<string?> row, bool PartTwo);
+    protected abstract Uof<I> ParseData(DataLine<string?> row, bool PartTwo);
 
     protected virtual void ParseHeader(DataLine<string?> header, bool PartTwo) { }
 
@@ -59,21 +59,21 @@ internal abstract class AdventBase<I,A>
         {
             line = await rdr.ReadLineAsync(cancellationToken);
             if (string.IsNullOrWhiteSpace(line))
-                ParseHeader(new(lineNumber++, DeterminateOf<string?>.Bad()), PartTwo);
+                ParseHeader(new(lineNumber++, Uof<string?>.Bad()), PartTwo);
             else
-                ParseHeader(new(lineNumber++, DeterminateOf<string?>.Good(line)), PartTwo);
+                ParseHeader(new(lineNumber++, Uof<string?>.Good(line)), PartTwo);
         }
 
         while (!rdr.EndOfStream)
         {
             line = await rdr.ReadLineAsync(cancellationToken);
-            DeterminateOf<string?> entry;
+            Uof<string?> entry;
             if (string.IsNullOrWhiteSpace(line))
-                entry = DeterminateOf<string?>.Bad();
+                entry = Uof<string?>.Bad();
             else
-                entry = DeterminateOf<string?>.Good(line);
+                entry = Uof<string?>.Good(line);
 
-            DeterminateOf<I> i = ParseData(new(lineNumber, entry), PartTwo);
+            Uof<I> i = ParseData(new(lineNumber, entry), PartTwo);
 
             yield return new(lineNumber++, i);
         }

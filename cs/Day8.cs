@@ -140,17 +140,17 @@ internal sealed class Day8 : AdventBase<KeyValuePair<string, DirectionalCoordina
         return a;
     }
 
-    protected override DeterminateOf<KeyValuePair<string, DirectionalCoordinate>> ParseData(DataLine<string?> row, bool PartTwo)
+    protected override Uof<KeyValuePair<string, DirectionalCoordinate>> ParseData(DataLine<string?> row, bool PartTwo)
     {
         var (_, (valid, data)) = row;
 
-        if (!valid) return DeterminateOf<KeyValuePair<string, DirectionalCoordinate>>.Bad();
+        if (!valid) return Uof<KeyValuePair<string, DirectionalCoordinate>>.Bad();
 
         ReadOnlySpan<string> parts = SplitString(data, 2, '=');
         ReadOnlySpan<string> lr = SplitString(parts[1], 2, ',');
 
         DirectionalCoordinate c = (lr[0][1..], lr[1][..^1]);
-        return DeterminateOf<KeyValuePair<string, DirectionalCoordinate>>.Good(new(parts[0], c));
+        return Uof<KeyValuePair<string, DirectionalCoordinate>>.Good(new(parts[0], c));
     }
 
     protected override void ParseHeader(DataLine<string?> header, bool PartTwo)
