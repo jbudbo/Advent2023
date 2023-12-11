@@ -1,6 +1,5 @@
 ﻿namespace cs;
 
-using System.Drawing;
 using Point = (int X, int Y);
 
 internal class Day10 : AdventBase<IEnumerable<MapSymbol>>
@@ -13,52 +12,28 @@ internal class Day10 : AdventBase<IEnumerable<MapSymbol>>
 
         if (!v) return Union.Fail<IEnumerable<MapSymbol>>();
 
-        //Console.ForegroundColor = ConsoleColor.White;
-        //Console.WriteLine(d);
-
         return Union.Pass(d!.Select(static c => c.AsSymbol()));
     }
 
     protected override async ValueTask PartOne(IAsyncEnumerable<DataLine<IEnumerable<MapSymbol>>> source, CancellationToken cancellationToken = default)
     {
-        Bitmap b = Bitmap.
-
         List<MapRow> map = [];
 
-        await foreach(DataLine<IEnumerable<MapSymbol>> row in source)
+        await foreach (DataLine<IEnumerable<MapSymbol>> row in source)
         {
-            var (ln, (v,data)) = row;
+            var (ln, (v, data)) = row;
             if (!v) continue;
 
             map.Add(new(ln, data));
         }
 
-        //Console.WindowWidth = map[0].Length;
-        //Console.WindowHeight = map.Count;
-        //Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-
         Map m = new(map);
-
-        const int delay = 50;
-        //await Task.Delay(delay, cancellationToken);
-
-        //Console.SetCursorPosition(m.Origin.X, m.Origin.Y);
-        //Console.ForegroundColor = ConsoleColor.Green;
-        //Console.Write('S');
-        //await Task.Delay(delay, cancellationToken);
-        //Console.ForegroundColor = ConsoleColor.Red;
 
         var candidates = m.GetNeighborsOf(m.Origin).Where(static t => t.Item2 is not MapSymbol.Gnd).ToArray();
 
         var a = m.GetNext(m.Origin, candidates[0].Item1);
-        //Console.SetCursorPosition(a.Item1.X, a.Item1.Y);
-        //Console.Write(a.Item2.AsChar());
-        //await Task.Delay(delay, cancellationToken);
 
         var b = m.GetNext(a.Item1, m.Origin);
-        //Console.SetCursorPosition(b.Item1.X, b.Item1.Y);
-        //Console.Write(b.Item2.AsChar());
-        //await Task.Delay(delay, cancellationToken);
 
         long fullTrip = 2;
         while (!cancellationToken.IsCancellationRequested)
@@ -66,8 +41,6 @@ internal class Day10 : AdventBase<IEnumerable<MapSymbol>>
             var c = m.GetNext(b.Item1, a.Item1);
             if (c.Item2 is MapSymbol.Start)
                 break;
-            //Console.SetCursorPosition(c.Item1.X, c.Item1.Y);
-            //Console.Write(c.Item2.AsChar());
             fullTrip++;
             a = b;
             b = c;
@@ -78,6 +51,11 @@ internal class Day10 : AdventBase<IEnumerable<MapSymbol>>
             catch { }
         }
         Answer = (fullTrip + 1) / 2;
+    }
+
+    private void W_Update(double obj)
+    {
+        throw new NotImplementedException();
     }
 
     protected override ValueTask PartTwo(IAsyncEnumerable<DataLine<IEnumerable<MapSymbol>>> source, CancellationToken cancellationToken = default)
