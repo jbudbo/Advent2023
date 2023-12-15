@@ -1,7 +1,4 @@
-﻿
-using System.Collections.Specialized;
-
-internal class Day15 : AdventBase<char[]>
+﻿internal class Day15 : AdventBase<char[]>
 {
     protected override string Day => nameof(Day15);
 
