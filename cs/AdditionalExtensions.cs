@@ -24,4 +24,14 @@ internal static class AdditionalExtensions
             i++;
         }
     }
+
+    public static ReadOnlySpan<O> As<T,O>(this ReadOnlySpan<T> source
+        , Func<T, O> transform)
+    {
+        int i = 0, j = source.Length;
+        Span<O> buffer = new O[j];
+        while (i < j) buffer[i] = transform(source[i++]);
+        return buffer;
+    }
+
 }

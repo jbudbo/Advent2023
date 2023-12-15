@@ -1,6 +1,5 @@
 ﻿using Galaxy = (int X, int Y);
 using cs;
-using System.Xml.XPath;
 using System.Diagnostics.CodeAnalysis;
 
 internal class Day11 : AdventBase<char[]>
