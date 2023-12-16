@@ -1,7 +1,4 @@
-﻿
-using cs;
-
-internal class Day14 : AdventBase<char[]>
+﻿internal class Day14 : AdventBase<char[]>
 {
     protected override string Day => nameof(Day14);
 

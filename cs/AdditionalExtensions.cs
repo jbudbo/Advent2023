@@ -1,6 +1,6 @@
 ﻿namespace cs;
 
-internal static class AdditionalExtensions
+internal static partial class AdditionalExtensions
 {
     public static IEnumerable<(T,T)> Window<T>(this IEnumerable<T> source)
     {
