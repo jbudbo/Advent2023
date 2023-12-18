@@ -1,5 +1,4 @@
-﻿using cs;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 internal sealed class Day16 : AdventBase<char[]>
 {
@@ -25,7 +24,11 @@ internal sealed class Day16 : AdventBase<char[]>
         await foreach (var (_, (_, rowData)) in source)
         {
             map.Add(rowData);
+
+            ShineRow(rowData);
         }
+
+        return;
 
         char[][] plane = [.. map];
 
@@ -45,11 +48,73 @@ internal sealed class Day16 : AdventBase<char[]>
             Answer = Math.Max(Answer, ChargesFromOrigin(plane, (i, 0, Direction.South)));
             Answer = Math.Max(Answer, ChargesFromOrigin(plane, (i, eX, Direction.North)));
         }
+    
+    }
+
+    static readonly char[] hBlockers = ['|', '\\', '/'];
+    private static object ShineRow(ReadOnlySpan<char> path)
+    {
+        int l = path.Length;
+
+        Span<Range> ranges = stackalloc Range[100];
+        int splits = path.SplitAny(ranges, hBlockers);
+
+        List<Path> paths = [];
+        for(int i = 0; i < splits; i++)
+        {
+            Range r = ranges[i];
+            bool endsRow = r.End.Value == path.Length;
+
+            if (endsRow)
+                paths.Add(new(r, true));
+            else
+                paths.Add(new(r, path[r.End]));
+
+            //Index iS = new (l - r.End.Value, true);
+            Index iE = new (l - r.End.Value, true);
+            r = new(r.Start, iE);
+            endsRow = r.Start.Value == 0;
+
+            if (endsRow)
+                paths.Add(new(r, true));
+            else
+                paths.Add(new(r, path[r.Start.Value-1]));
+
+        }
+
+        return 0;
+    }
+
+    readonly struct Path
+    {
+        private readonly Range _path;
+        private readonly bool _endsInBoundary;
+        private readonly char _tail;
+
+        public long Value => _path.End.Value - _path.Start.Value
+            + (_endsInBoundary ? 0 : 1);
+
+        public Path(Range r, bool endsInBoundary)
+        {
+            _path = r;
+            _endsInBoundary = endsInBoundary;
+            _tail = '\0';
+        }
+
+        public Path(Range r, char tail)
+        {
+            _path = r;
+            _endsInBoundary = false;
+            _tail = tail;
+        }
     }
 
     [DebuggerStepThrough]
     private static long ChargesFromOrigin(in char[][] map, (int,int,Direction) originPoint)
     {
+        //Update, Now that we're working from a point, we don't actually need to evaluate
+        //  each in a loop. We wont add work til we know we need to change direction
+
         Queue<(int, int, Direction)> work = [];
         work.Enqueue(originPoint);
 

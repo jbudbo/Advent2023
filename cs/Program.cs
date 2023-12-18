@@ -7,7 +7,7 @@ Console.CancelKeyPress += (_, e) =>
 
 long start = Stopwatch.GetTimestamp();
 
-var Answer = await new Day16().PartTwo(cts.Token);
+var Answer = await new Day18().PartTwo(cts.Token);
 
 Console.WriteLine($"Answer {Answer}");
 Console.WriteLine($"Run time {Stopwatch.GetElapsedTime(start)}");
