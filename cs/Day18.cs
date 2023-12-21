@@ -1,7 +1,4 @@
 ﻿
-using System.Threading;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 internal sealed partial class Day18 : AdventBase<Day18.Instruction>
 {
     protected override string Day => nameof(Day18);

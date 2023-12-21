@@ -4,6 +4,7 @@
 
     public readonly Uof<I> Data => data;
 
+    [DebuggerStepThrough]
     public void Deconstruct(out int LineNumber, out Uof<I> Data)
         => (LineNumber, Data)
         = (this.LineNumber, this.Data);
